@@ -15,6 +15,7 @@
 	<description>Application for calculating traffic toll fee</description>
 	<properties>
 		<java.version>17</java.version>
+		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -49,7 +50,7 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.5.3.Final</version>
+			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -80,6 +81,75 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>initialize</phase>
+					</execution>
+					<execution>
+						<id>validate-the-git-infos</id>
+						<goals>
+							<goal>validateRevision</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+					<prefix>git</prefix>
+					<verbose>false</verbose>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+					</generateGitPropertiesFilename>
+					<!--
+						 Very important to make sure that the format is set to "properties"
+						 (which is the default value if format tag is omitted)
+						 instead of "JSON" in order to work with spring actuator
+					-->
+					<format>properties</format>
+					<gitDescribe>
+						<skip>false</skip>
+						<always>false</always>
+						<dirty>-dirty</dirty>
+					</gitDescribe>
+					<validationProperties>
+						<!-- verify that the current repository is not dirty -->
+						<validationProperty>
+							<name>validating git dirty</name>
+							<value>false</value>
+							<shouldMatchTo>false</shouldMatchTo>
+						</validationProperty>
+					</validationProperties>
+					<commitIdGenerationMode>full</commitIdGenerationMode>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
