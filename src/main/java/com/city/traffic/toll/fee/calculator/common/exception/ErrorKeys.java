@@ -10,7 +10,13 @@ public final class ErrorKeys {
     public static final String THIS_USER_IS_NOT_FOUND_IN_OUR_SYSTEM = "This user is not found in our system";
     public static final String THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION  = "This user is not authorized for this action";
     public static final String MUST_HAVE_EMAIL_HEADER_PARAMETER  = "Must have email header parameter.";
-
-
+    public static final String FREE_DAY_NAME_LENGTH_MUST_NOT_EXCEED_100 = "Free day name length must not exceed 100";
+    public static final String FREE_DAY_NAME_MUST_NOT_BE_NULL_OR_EMPTY = "Free day name must not be null or empty";
+    public static final String FREE_DAY_DATE_MUST_NOT_BE_NULL = "Free day date must not be null";
+    public static final String CAN_NOT_FIND_EMPLOYEE_WITH_THIS_ID = "Can not find employee with this id";
+    public static final String CAN_NOT_FIND_FREE_DAY_WITH_THIS_ID = "Can not find free day with this id";
+    public static final String HOUR_FEE_START_TIME_MUST_NOT_BE_NULL = "Hour free start time must not be null";
+    public static final String HOUR_FEE_END_TIME_MUST_NOT_BE_NULL = "Hour free end time must not be null";
+    public static final String HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL = "Hour free value must not be null & min = 1";
 
 }

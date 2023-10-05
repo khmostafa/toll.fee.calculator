@@ -1,6 +1,7 @@
 package com.city.traffic.toll.fee.calculator.user.service.impl;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
+import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.city.traffic.toll.fee.calculator.common.exception.STCValidationException;
 import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
 import com.city.traffic.toll.fee.calculator.common.service.UserPermissionService;
@@ -47,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ApiResponse<EmployeeResponse> update(Long id, AddEmployeeRequest addEmployeeRequest) {
         log.info("Need Update User With ID: {} by {}", id, addEmployeeRequest);
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new STCValidationException("", HttpStatus.BAD_REQUEST));
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new STCValidationException(ErrorKeys.CAN_NOT_FIND_EMPLOYEE_WITH_THIS_ID, HttpStatus.BAD_REQUEST));
         EmployeeEntity user = userPermissionService.getUserIfApproved(employeeEntity.getRole());
         employeeEntity = employeeMapper.updateEntity(addEmployeeRequest, employeeEntity);
         employeeEntity = employeeRepository.update(employeeEntity, user.getId());
@@ -58,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ApiResponse<EmployeeResponse> delete(Long id) {
         log.info("Need Delete User With ID: {}", id);
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new STCValidationException("", HttpStatus.BAD_REQUEST));
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new STCValidationException(ErrorKeys.CAN_NOT_FIND_EMPLOYEE_WITH_THIS_ID, HttpStatus.BAD_REQUEST));
         userPermissionService.isApprovedUser(employeeEntity.getRole());
         employeeRepository.delete(employeeEntity);
         log.info("User Deleted --------------------");

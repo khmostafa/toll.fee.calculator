@@ -28,12 +28,11 @@ public class EmployeeApi {
     }
 
     @DeleteMapping("/{employeeId}")
-    public ApiResponse<EmployeeResponse> delete(@PathVariable("employeeId") Long id, @RequestBody AddEmployeeRequest addEmployeeRequest){
+    public ApiResponse<EmployeeResponse> delete(@PathVariable("employeeId") Long id){
         return employeeService.delete(id);
     }
     @GetMapping
     public ApiResponse<PaginationDto<List<EmployeeResponse>>> list(@RequestParam int offset, @RequestParam int limit){
         return employeeService.list(offset, limit);
     }
-
 }
