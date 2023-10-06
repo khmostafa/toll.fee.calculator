@@ -1,7 +1,7 @@
 package com.city.traffic.toll.fee.calculator.freedays.model.entity;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
-import com.city.traffic.toll.fee.calculator.common.model.model.entity.EntityBase;
+import com.city.traffic.toll.fee.calculator.common.model.model.EntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;

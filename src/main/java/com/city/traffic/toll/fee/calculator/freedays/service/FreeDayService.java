@@ -1,17 +1,22 @@
 package com.city.traffic.toll.fee.calculator.freedays.service;
 
-import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
-import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
+import com.city.traffic.toll.fee.calculator.common.permission.UserPermissionService;
+import com.city.traffic.toll.fee.calculator.common.service.BaseService;
+import com.city.traffic.toll.fee.calculator.freedays.mapper.FreeDayMapper;
+import com.city.traffic.toll.fee.calculator.freedays.model.entity.FreeDayEntity;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.AddFreeDayRequest;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.response.FreeDayResponse;
+import com.city.traffic.toll.fee.calculator.freedays.permission.FreeDayPermission;
+import com.city.traffic.toll.fee.calculator.freedays.repository.FreeDayRepository;
+import com.city.traffic.toll.fee.calculator.freedays.specification.FreeDaySpecification;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 
-
-import java.util.List;
-
-public interface FreeDayService {
-    ApiResponse<FreeDayResponse> add(AddFreeDayRequest addFreeDayRequest);
-
-    ApiResponse<FreeDayResponse> delete(Long id);
-
-    ApiResponse<PaginationDto<List<FreeDayResponse>>> list(int offset, int limit);
+@Log4j2
+@Service
+public class FreeDayService extends BaseService<FreeDayEntity, FreeDayRepository, FreeDaySpecification, AddFreeDayRequest, FreeDayMapper, FreeDayResponse, FreeDayPermission> {
+    public FreeDayService(FreeDayMapper mapper, FreeDayRepository repository, FreeDaySpecification specification, FreeDayPermission permission) {
+        super(mapper, repository, specification, permission);
+    }
 }
