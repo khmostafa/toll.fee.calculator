@@ -14,7 +14,7 @@ public class EmployeeSpecificationService implements BaseSpecification<EmployeeE
 
     public Specification<EmployeeEntity> roleSpec(EmployeeRole role) {
         return (Root<EmployeeEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
-            criteriaBuilder.lessThan(root.get("role").get("value"), role.getLongValue());
+            criteriaBuilder.greaterThan(root.get("role"), role.ordinal());
     }
 
     @Override

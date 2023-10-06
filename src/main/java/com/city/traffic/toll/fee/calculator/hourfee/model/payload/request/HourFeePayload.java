@@ -7,5 +7,5 @@ import java.time.LocalTime;
 public class HourFeePayload {
     private LocalTime startTime;
     private LocalTime endTime;
-    private Double value;
+    private Long value;
 }

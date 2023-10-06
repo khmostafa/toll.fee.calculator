@@ -2,6 +2,7 @@ package com.city.traffic.toll.fee.calculator.freedays.model.entity;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.city.traffic.toll.fee.calculator.common.model.model.EntityBase;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,5 +26,6 @@ public class FreeDayEntity extends EntityBase {
     private String name;
 
     @NotNull(message = ErrorKeys.FREE_DAY_DATE_MUST_NOT_BE_NULL)
+    @Column(unique = true)
     private LocalDate freeDay;
 }

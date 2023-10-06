@@ -2,7 +2,9 @@ package com.city.traffic.toll.fee.calculator.common.exception;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -45,6 +47,25 @@ public class ExceptionAdviceHandler {
                 .type(simpleName).build();
 
         return handleErrorResponse(errorPayloads, exception.getStatus());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleUniqueConstraintViolation(DataIntegrityViolationException ex) {
+        if (ex.getMessage().contains("unique")) {
+            ErrorPayload errorPayloads = ErrorPayload.builder()
+                    .enMessage("The record you try to add/update is already existed")
+                    .arMessage("The record you try to add/update is already existed")
+                    .code("" + HttpStatus.CONFLICT)
+                    .type(ex.getClass().getSimpleName()).build();
+            return handleErrorResponse(errorPayloads, HttpStatus.CONFLICT);
+        }
+        ErrorPayload errorPayloads = ErrorPayload.builder()
+                .enMessage("Database Error Occurred")
+                .arMessage("Database Error Occurred")
+                .code("" + HttpStatus.INTERNAL_SERVER_ERROR)
+                .type(ex.getClass().getSimpleName()).build();
+
+        return handleErrorResponse(errorPayloads, HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<Object> handleErrorResponse(ErrorPayload errors, HttpStatus status) {

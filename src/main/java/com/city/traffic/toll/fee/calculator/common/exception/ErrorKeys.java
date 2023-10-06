@@ -17,8 +17,14 @@ public final class ErrorKeys {
     public static final String HOUR_FEE_END_TIME_MUST_NOT_BE_NULL = "Hour free end time must not be null";
     public static final String HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL = "Hour free value must not be null & min = 1";
     public static final String FREE_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY = "Free vehicle type must not be null or empty";
-    public static final String FREE_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_100 = "Free vehicle type length must not exceed 100";
+    public static final String FREE_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20 = "Free vehicle type length must not exceed 20";
     public static final String FREE_VEHICLE_TYPE_MUST_BE_IN_APPROVED_FORMAT = "Free vehicle type must be in pattern ^[A-Z_]*$";
-
+    public static final String UN_VALID_STORED_VALUE_FOR_EMPLOYEE_ROLE = "Stored Employee Role Not Valid";
+    public static final String TOLL_VEHICLE_NO_LENGTH_MUST_NOT_EXCEED_20 = "Vehicle number length must not exceed 20";
+    public static final String TOLL_VEHICLE_NO_MUST_NOT_BE_NULL_OR_EMPTY = "Vehicle number must not be null or empty";
+    public static final String TOLL_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY = "Vehicle type must not be null or empty";
+    public static final String TOLL_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20 = "Employee name length must not exceed 20";
+    public static final String TOLL_DAY_MUST_NOT_BE_NULL = "Toll day must not be null";
+    public static final String TOLL_TIME_MUST_NOT_BE_NULL = "Toll time must not be null";
 
 }

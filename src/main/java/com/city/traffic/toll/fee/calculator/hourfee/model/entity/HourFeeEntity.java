@@ -26,5 +26,5 @@ public class HourFeeEntity extends EntityBase {
 
     @NotNull(message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
     @Min(value = 1, message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
-    private Double value;
+    private Long value;
 }

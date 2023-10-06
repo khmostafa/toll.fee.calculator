@@ -1,12 +1,15 @@
 package com.city.traffic.toll.fee.calculator.toll.model.payload.response;
 
+import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Data
-public class TollResponse {
-    private Long id;
+@Builder
+public class FeeResponse {
     private String vehicleNo;
     private String type;
-    private LocalDateTime date;
+    private LocalDate date;
+    private Long fee;
 }

@@ -32,6 +32,5 @@ public class EmployeeEntity extends EntityBase {
     private String profileImage;
 
     @NotNull(message = ErrorKeys.EMPLOYEE_ROLE_MUST_NOT_BE_NULL)
-    @Enumerated(EnumType.STRING)
     private EmployeeRole role;
 }
