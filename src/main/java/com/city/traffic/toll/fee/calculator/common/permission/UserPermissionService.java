@@ -3,15 +3,13 @@ package com.city.traffic.toll.fee.calculator.common.permission;
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.city.traffic.toll.fee.calculator.common.exception.STCValidationException;
 import com.city.traffic.toll.fee.calculator.user.model.entity.EmployeeEntity;
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
+import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
 import com.city.traffic.toll.fee.calculator.user.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 @Log4j2
-@Component
 @RequiredArgsConstructor
 public abstract class UserPermissionService<E, R> {
 

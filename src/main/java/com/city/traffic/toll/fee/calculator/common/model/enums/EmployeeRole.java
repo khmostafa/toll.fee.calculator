@@ -1,4 +1,4 @@
-package com.city.traffic.toll.fee.calculator.user.model.enums;
+package com.city.traffic.toll.fee.calculator.common.model.enums;
 
 public enum EmployeeRole {
     SUPER_ADMIN(5L),

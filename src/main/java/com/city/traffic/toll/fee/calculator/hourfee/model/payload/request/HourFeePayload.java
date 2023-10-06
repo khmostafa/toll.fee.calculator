@@ -4,7 +4,7 @@ import lombok.Data;
 import java.time.LocalTime;
 
 @Data
-public class AddHourFeeRequest {
+public class HourFeePayload {
     private LocalTime startTime;
     private LocalTime endTime;
     private Double value;

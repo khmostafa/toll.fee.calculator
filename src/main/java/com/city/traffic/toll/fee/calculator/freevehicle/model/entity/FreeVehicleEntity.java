@@ -1,4 +1,4 @@
-package com.city.traffic.toll.fee.calculator.freevehicletype.model.entity;
+package com.city.traffic.toll.fee.calculator.freevehicle.model.entity;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.city.traffic.toll.fee.calculator.common.model.model.EntityBase;
@@ -9,9 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "free_vehicle")

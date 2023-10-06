@@ -1,11 +1,10 @@
-package com.city.traffic.toll.fee.calculator.freevehicletype.api;
+package com.city.traffic.toll.fee.calculator.freevehicle.api;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
 import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
-import com.city.traffic.toll.fee.calculator.freevehicletype.model.payload.request.AddFreeVehicleRequest;
-import com.city.traffic.toll.fee.calculator.freevehicletype.model.payload.response.FreeVehicleResponse;
-import com.city.traffic.toll.fee.calculator.freevehicletype.service.FreeVehicleService;
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
+import com.city.traffic.toll.fee.calculator.freevehicle.model.payload.request.FreeVehiclePayload;
+import com.city.traffic.toll.fee.calculator.freevehicle.model.payload.response.FreeVehicleResponse;
+import com.city.traffic.toll.fee.calculator.freevehicle.service.FreeVehicleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +17,13 @@ public class FreeVehicleApi {
     private final FreeVehicleService freeDayService;
 
     @PostMapping
-    public ApiResponse<FreeVehicleResponse> add(@RequestHeader("email") String email, @RequestBody AddFreeVehicleRequest addFreeVehicleRequest){
-        return freeDayService.add(email, addFreeVehicleRequest);
+    public ApiResponse<FreeVehicleResponse> add(@RequestHeader("email") String email, @RequestBody FreeVehiclePayload freeVehiclePayload){
+        return freeDayService.add(email, freeVehiclePayload);
     }
 
     @PutMapping("/{freeDayId}")
-    public ApiResponse<FreeVehicleResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody AddFreeVehicleRequest addFreeVehicleRequest){
-        return freeDayService.update(email, id, addFreeVehicleRequest);
+    public ApiResponse<FreeVehicleResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody FreeVehiclePayload freeVehiclePayload){
+        return freeDayService.update(email, id, freeVehiclePayload);
     }
 
     @DeleteMapping("/{freeDayId}")

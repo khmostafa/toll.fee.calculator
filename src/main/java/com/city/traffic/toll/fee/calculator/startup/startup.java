@@ -1,7 +1,7 @@
 package com.city.traffic.toll.fee.calculator.startup;
 
 import com.city.traffic.toll.fee.calculator.user.model.entity.EmployeeEntity;
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
+import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
 import com.city.traffic.toll.fee.calculator.user.repository.EmployeeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

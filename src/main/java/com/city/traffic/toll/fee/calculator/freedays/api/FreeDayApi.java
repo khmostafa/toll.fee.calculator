@@ -2,10 +2,9 @@ package com.city.traffic.toll.fee.calculator.freedays.api;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
 import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
-import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.AddFreeDayRequest;
+import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.FreeDayPayload;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.response.FreeDayResponse;
 import com.city.traffic.toll.fee.calculator.freedays.service.FreeDayService;
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +17,13 @@ public class FreeDayApi {
     private final FreeDayService freeDayService;
 
     @PostMapping
-    public ApiResponse<FreeDayResponse> add(@RequestHeader("email") String email, @RequestBody AddFreeDayRequest addFreeDayRequest){
-        return freeDayService.add(email, addFreeDayRequest);
+    public ApiResponse<FreeDayResponse> add(@RequestHeader("email") String email, @RequestBody FreeDayPayload freeDayPayload){
+        return freeDayService.add(email, freeDayPayload);
     }
 
     @PutMapping("/{freeDayId}")
-    public ApiResponse<FreeDayResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody AddFreeDayRequest addFreeDayRequest){
-        return freeDayService.update(email, id, addFreeDayRequest);
+    public ApiResponse<FreeDayResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody FreeDayPayload freeDayPayload){
+        return freeDayService.update(email, id, freeDayPayload);
     }
 
     @DeleteMapping("/{freeDayId}")

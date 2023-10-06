@@ -1,6 +1,6 @@
 package com.city.traffic.toll.fee.calculator.user.model.payload.response;
 
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
+import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
 import lombok.Data;
 
 import java.io.Serializable;

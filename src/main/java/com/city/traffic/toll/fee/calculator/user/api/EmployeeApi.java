@@ -2,8 +2,7 @@ package com.city.traffic.toll.fee.calculator.user.api;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
 import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
-import com.city.traffic.toll.fee.calculator.user.model.enums.EmployeeRole;
-import com.city.traffic.toll.fee.calculator.user.model.payload.request.AddEmployeeRequest;
+import com.city.traffic.toll.fee.calculator.user.model.payload.request.EmployeePayload;
 import com.city.traffic.toll.fee.calculator.user.model.payload.response.EmployeeResponse;
 import com.city.traffic.toll.fee.calculator.user.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +17,13 @@ public class EmployeeApi {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ApiResponse<EmployeeResponse> add(@RequestHeader("email") String email, @RequestBody AddEmployeeRequest addEmployeeRequest){
-        return employeeService.add(email, addEmployeeRequest);
+    public ApiResponse<EmployeeResponse> add(@RequestHeader("email") String email, @RequestBody EmployeePayload employeePayload){
+        return employeeService.add(email, employeePayload);
     }
 
     @PutMapping("/{employeeId}")
-    public ApiResponse<EmployeeResponse> update(@RequestHeader("email") String email, @PathVariable("employeeId") Long id, @RequestBody AddEmployeeRequest addEmployeeRequest){
-        return employeeService.update(email, id, addEmployeeRequest);
+    public ApiResponse<EmployeeResponse> update(@RequestHeader("email") String email, @PathVariable("employeeId") Long id, @RequestBody EmployeePayload employeePayload){
+        return employeeService.update(email, id, employeePayload);
     }
 
     @DeleteMapping("/{employeeId}")
