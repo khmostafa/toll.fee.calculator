@@ -4,9 +4,11 @@ import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.FreeDayPayload;
 import com.city.traffic.toll.fee.calculator.freevehicle.model.payload.request.FreeVehiclePayload;
 import com.city.traffic.toll.fee.calculator.hourfee.model.payload.request.HourFeePayload;
+import com.city.traffic.toll.fee.calculator.toll.model.payload.request.TollPayload;
 import com.city.traffic.toll.fee.calculator.user.model.payload.request.EmployeePayload;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class StaticDtoProvider {
@@ -37,6 +39,14 @@ public class StaticDtoProvider {
                 .startTime(s)
                 .endTime(e)
                 .value(v)
+                .build();
+    }
+
+    public static TollPayload createTollPayLoad(String vehicle, String type, LocalDateTime time){
+        return TollPayload.builder()
+                .vehicleNo(vehicle)
+                .type(type)
+                .date(time)
                 .build();
     }
 }

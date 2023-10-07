@@ -1,6 +1,9 @@
 package com.city.traffic.toll.fee.calculator.common.exception;
 
 public final class ErrorKeys {
+    private ErrorKeys(){
+
+    }
     public static final String EMPLOYEE_NAME_LENGTH_MUST_NOT_EXCEED_100 = "Employee name length must not exceed 100";
     public static final String EMPLOYEE_NAME_MUST_NOT_BE_NULL_OR_EMPTY = "Employee name must not be null or empty";
     public static final String EMPLOYEE_EMAIL_MUST_NOT_BE_NULL = "Employee email must not be null";
@@ -26,6 +29,4 @@ public final class ErrorKeys {
     public static final String TOLL_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY = "Vehicle type must not be null or empty";
     public static final String TOLL_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20 = "Employee name length must not exceed 20";
     public static final String TOLL_DAY_MUST_NOT_BE_NULL = "Toll day must not be null";
-    public static final String TOLL_TIME_MUST_NOT_BE_NULL = "Toll time must not be null";
-
 }

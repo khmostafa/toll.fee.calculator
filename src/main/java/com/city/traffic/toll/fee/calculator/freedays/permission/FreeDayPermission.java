@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FreeDayPermission extends UserPermissionService<FreeDayEntity, FreeDayPayload> {
 
-    private final EmployeeRole role = EmployeeRole.JUST_USER;
+    private static final EmployeeRole role = EmployeeRole.JUST_USER;
     public FreeDayPermission(EmployeeRepository employeeRepository) {
         super(employeeRepository);
     }
@@ -22,7 +22,7 @@ public class FreeDayPermission extends UserPermissionService<FreeDayEntity, Free
     @Override
     public EmployeeEntity getUserIfApprovedForThisRequest(String email, FreeDayPayload request) {
         EmployeeEntity user = this.getEmployeeProfile(email);
-        if(user.getRole().getLongValue() <= this.role.getLongValue()){
+        if(user.getRole().getLongValue() <= role.getLongValue()){
             throw new STCValidationException(ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION, HttpStatus.FORBIDDEN);
         }
         return user;

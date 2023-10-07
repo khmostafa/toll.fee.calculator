@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FreeVehiclePermission extends UserPermissionService<FreeVehicleEntity, FreeVehiclePayload> {
 
-    private final EmployeeRole role = EmployeeRole.JUST_USER;
+    private static final EmployeeRole role = EmployeeRole.JUST_USER;
 
     public FreeVehiclePermission(EmployeeRepository employeeRepository) {
         super(employeeRepository);
@@ -23,7 +23,7 @@ public class FreeVehiclePermission extends UserPermissionService<FreeVehicleEnti
     @Override
     public EmployeeEntity getUserIfApprovedForThisRequest(String email, FreeVehiclePayload request) {
         EmployeeEntity user = this.getEmployeeProfile(email);
-        if(user.getRole().getLongValue() <= this.role.getLongValue()){
+        if(user.getRole().getLongValue() <= role.getLongValue()){
             throw new STCValidationException(ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION, HttpStatus.FORBIDDEN);
         }
         return user;
@@ -32,7 +32,7 @@ public class FreeVehiclePermission extends UserPermissionService<FreeVehicleEnti
     @Override
     public void checkIfEntityApprovedToBeManipulatedByThisUser(String email, FreeVehicleEntity entity) {
         EmployeeEntity user = this.getEmployeeProfile(email);
-        if(user.getRole().getLongValue() <= this.role.getLongValue()) {
+        if(user.getRole().getLongValue() <= role.getLongValue()) {
             throw new STCValidationException(ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION, HttpStatus.FORBIDDEN);
         }
     }

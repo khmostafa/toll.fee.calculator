@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @Service
@@ -68,5 +69,26 @@ public class TollService extends BaseService<TollEntity, TollRepository, TollSpe
                 .data(responses).totalPages(tollPage.getTotalPages()).totalElements(tollPage.getTotalElements()).build();
         page.getData().forEach(r -> log.info("User '{}' list record {}", user.getEmail(), r));
         return ApiResponse.ok(page);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        TollService tollService = (TollService) obj;
+        return Objects.equals(freeDayRepository, tollService.freeDayRepository) &&
+                Objects.equals(freeVehicleRepository, tollService.freeVehicleRepository) &&
+                Objects.equals(hourFeeRepository, tollService.hourFeeRepository) &&
+                Objects.equals(tollCalculator, tollService.tollCalculator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(freeDayRepository, freeVehicleRepository, hourFeeRepository, tollCalculator);
     }
 }

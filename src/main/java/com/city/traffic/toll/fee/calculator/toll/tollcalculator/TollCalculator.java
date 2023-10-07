@@ -1,13 +1,10 @@
 package com.city.traffic.toll.fee.calculator.toll.tollcalculator;
 
-import com.city.traffic.toll.fee.calculator.common.exception.ApiResponse;
 import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
 import com.city.traffic.toll.fee.calculator.hourfee.model.entity.HourFeeEntity;
 import com.city.traffic.toll.fee.calculator.toll.model.entity.TollEntity;
 import com.city.traffic.toll.fee.calculator.toll.model.payload.response.FeeResponse;
-import com.city.traffic.toll.fee.calculator.toll.model.payload.response.TollResponse;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -94,10 +91,10 @@ public class TollCalculator {
 
 
         for (LocalDateTime dateTime : sortedList) {
-            if (currentGroup.isEmpty() || currentGroup.get(0).plusHours(1).isBefore(dateTime)) {
+            if (currentGroup.isEmpty() || currentGroup.get(0).plusHours(1).isAfter(dateTime)) {
                 currentGroup.add(dateTime);
             } else {
-                result.add(new ArrayList<>(currentGroup));
+                result.add(currentGroup);
                 currentGroup.clear();
                 currentGroup.add(dateTime);
             }

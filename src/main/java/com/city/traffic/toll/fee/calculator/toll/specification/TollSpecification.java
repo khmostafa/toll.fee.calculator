@@ -2,7 +2,6 @@ package com.city.traffic.toll.fee.calculator.toll.specification;
 
 import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
 import com.city.traffic.toll.fee.calculator.common.specification.BaseSpecification;
-import com.city.traffic.toll.fee.calculator.hourfee.model.entity.HourFeeEntity;
 import com.city.traffic.toll.fee.calculator.toll.model.entity.TollEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

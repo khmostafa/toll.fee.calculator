@@ -64,28 +64,28 @@ class FreeDaysTestCase {
 
     @Test
     void notAuthorizedEmployeeAddFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.JUST_USER);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad("October Victory", LocalDate.of(2023, 10, 6));
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION);
     }
 
     @Test
     void authorizedEmployeeAddFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad("October Victory", LocalDate.of(2023, 10, 6));
         assertOK(getAddResult(user.getEmail(), payload));
     }
 
     @Test
     void authorizedEmployeeAddFreeDayWithNullName() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad(null, LocalDate.of(2023, 10, 6));
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.BAD_REQUEST, ErrorKeys.FREE_DAY_NAME_MUST_NOT_BE_NULL_OR_EMPTY);
     }
 
     @Test
     void notExistedEmployeeUpdateFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -96,7 +96,7 @@ class FreeDaysTestCase {
 
     @Test
     void authorizedEmployeeUpdateFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -106,8 +106,8 @@ class FreeDaysTestCase {
 
     @Test
     void notAuthorizedEmployeeUpdateFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
-        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
+        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", EmployeeRole.JUST_USER);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -118,7 +118,7 @@ class FreeDaysTestCase {
 
     @Test
     void notExistedEmployeeDeleteFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -129,7 +129,7 @@ class FreeDaysTestCase {
 
     @Test
     void authorizedEmployeeDeleteFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -139,8 +139,8 @@ class FreeDaysTestCase {
 
     @Test
     void notAuthorizedEmployeeDeleteFreeDay() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
-        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
+        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", EmployeeRole.JUST_USER);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -151,17 +151,16 @@ class FreeDaysTestCase {
 
     @Test
     void notExistedEmployeeListFreeDays() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         FreeDayPayload payload = StaticDtoProvider.createFreeDayPayLoad( "October Day", LocalDate.of(2023, 10, 6));
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
-        JsonNode json = objectMapper.readTree(addResult.getResponse().getContentAsString(Charset.defaultCharset()));
         assertError(getListResult("notFound@gmail.com"), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_IS_NOT_FOUND_IN_OUR_SYSTEM);
     }
 
     @Test
     void authorizedEmployeeListFreeDays() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         assertOK(getAddResult(user.getEmail(),
                 StaticDtoProvider.createFreeDayPayLoad( "Day 1", LocalDate.of(2023, 10, 6))));
         assertOK(getAddResult(user.getEmail(),
@@ -175,11 +174,11 @@ class FreeDaysTestCase {
         MvcResult result = getListResult(user.getEmail());
         JsonNode json = objectMapper.readTree(result.getResponse().getContentAsString(Charset.defaultCharset()));
         assertOK(result);
-        assertEquals(json.get("payload").get("totalElements").asLong(),  5);
+        assertEquals(5, json.get("payload").get("totalElements").asLong());
     }
 
-    private EmployeeEntity saveEmployee(String name, String email, String image, EmployeeRole role){
-        return employeeRepository.save(StaticEntityProvider.createEmployee(name, email, image, role));
+    private EmployeeEntity saveEmployee(String name, String email, EmployeeRole role){
+        return employeeRepository.save(StaticEntityProvider.createEmployee(name, email, "Image", role));
     }
 
     private MvcResult getAddResult(String email, FreeDayPayload request) throws Exception{

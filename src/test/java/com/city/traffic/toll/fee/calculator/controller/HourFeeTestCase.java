@@ -68,41 +68,41 @@ class HourFeeTestCase {
 
     @Test
     void notAuthorizedEmployeeAddHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.JUST_USER);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION);
     }
 
     @Test
     void authorizedEmployeeAddHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         assertOK(getAddResult(user.getEmail(), payload));
     }
 
     @Test
     void authorizedEmployeeAddHourFeeWithNullStartTime() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(null, LocalTime.of(10, 30), 18L);
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.BAD_REQUEST, ErrorKeys.HOUR_FEE_START_TIME_MUST_NOT_BE_NULL);
     }
     @Test
     void authorizedEmployeeAddHourFeeWithNullEndTime() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), null, 18L);
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.BAD_REQUEST, ErrorKeys.HOUR_FEE_END_TIME_MUST_NOT_BE_NULL);
     }
 
     @Test
     void authorizedEmployeeAddHourFeeWithNullValue() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), null);
         assertError(getAddResult(user.getEmail(), payload), HttpStatus.BAD_REQUEST, ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL);
     }
 
     @Test
     void notExistedEmployeeUpdateHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -113,7 +113,7 @@ class HourFeeTestCase {
 
     @Test
     void authorizedEmployeeUpdateHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -124,8 +124,8 @@ class HourFeeTestCase {
 
     @Test
     void notAuthorizedEmployeeUpdateHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
-        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
+        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", EmployeeRole.JUST_USER);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -136,7 +136,7 @@ class HourFeeTestCase {
 
     @Test
     void notExistedEmployeeDeleteHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -147,7 +147,7 @@ class HourFeeTestCase {
 
     @Test
     void authorizedEmployeeDeleteHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -157,8 +157,8 @@ class HourFeeTestCase {
 
     @Test
     void notAuthorizedEmployeeDeleteHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
-        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", "Image", EmployeeRole.JUST_USER);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
+        EmployeeEntity notAuthorizedUser = saveEmployee("Khaled1", "end.khmostafa1@gmail.com", EmployeeRole.JUST_USER);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
@@ -169,17 +169,16 @@ class HourFeeTestCase {
 
     @Test
     void notExistedEmployeeListHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         HourFeePayload payload = StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L);
         MvcResult addResult = getAddResult(user.getEmail(), payload);
         assertOK(addResult);
-        JsonNode json = objectMapper.readTree(addResult.getResponse().getContentAsString(Charset.defaultCharset()));
         assertError(getListResult("notFound@gmail.com"), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_IS_NOT_FOUND_IN_OUR_SYSTEM);
     }
 
     @Test
     void authorizedEmployeeListHourFee() throws Exception{
-        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        EmployeeEntity user = saveEmployee("Khaled", "end.khmostafa@gmail.com", EmployeeRole.EMPLOYEE);
         assertOK(getAddResult(user.getEmail(),
                 StaticDtoProvider.createHourFeePayLoad(LocalTime.of(10, 30), LocalTime.of(11, 30), 18L) ));
         assertOK(getAddResult(user.getEmail(),
@@ -193,11 +192,11 @@ class HourFeeTestCase {
         MvcResult result = getListResult(user.getEmail());
         JsonNode json = objectMapper.readTree(result.getResponse().getContentAsString(Charset.defaultCharset()));
         assertOK(result);
-        assertEquals(json.get("payload").get("totalElements").asLong(),  5);
+        assertEquals(5, json.get("payload").get("totalElements").asLong());
     }
 
-    private EmployeeEntity saveEmployee(String name, String email, String image, EmployeeRole role){
-        return employeeRepository.save(StaticEntityProvider.createEmployee(name, email, image, role));
+    private EmployeeEntity saveEmployee(String name, String email, EmployeeRole role){
+        return employeeRepository.save(StaticEntityProvider.createEmployee(name, email, "Image", role));
     }
 
     private MvcResult getAddResult(String email, HourFeePayload request) throws Exception{
