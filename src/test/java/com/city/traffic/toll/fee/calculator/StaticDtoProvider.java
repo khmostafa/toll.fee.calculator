@@ -1,7 +1,10 @@
 package com.city.traffic.toll.fee.calculator;
 
 import com.city.traffic.toll.fee.calculator.common.model.enums.EmployeeRole;
+import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.FreeDayPayload;
 import com.city.traffic.toll.fee.calculator.user.model.payload.request.EmployeePayload;
+
+import java.time.LocalDate;
 
 public class StaticDtoProvider {
     public static EmployeePayload createEmployeePayload(String name, String email, String profileImage, EmployeeRole role){
@@ -10,6 +13,13 @@ public class StaticDtoProvider {
                 .email(email)
                 .profileImage(profileImage)
                 .role(role)
+                .build();
+    }
+
+    public static FreeDayPayload createFreeDayPayLoad(String name, LocalDate freeDay){
+        return FreeDayPayload.builder()
+                .name(name)
+                .freeDay(freeDay)
                 .build();
     }
 }

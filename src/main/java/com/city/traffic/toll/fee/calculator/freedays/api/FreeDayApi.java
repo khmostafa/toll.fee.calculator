@@ -5,7 +5,9 @@ import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.request.FreeDayPayload;
 import com.city.traffic.toll.fee.calculator.freedays.model.payload.response.FreeDayResponse;
 import com.city.traffic.toll.fee.calculator.freedays.service.FreeDayService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +15,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/free-day")
 @RequiredArgsConstructor
+@Validated
 public class FreeDayApi {
     private final FreeDayService freeDayService;
 
     @PostMapping
-    public ApiResponse<FreeDayResponse> add(@RequestHeader("email") String email, @RequestBody FreeDayPayload freeDayPayload){
+    public ApiResponse<FreeDayResponse> add(@RequestHeader("email") String email, @Valid @RequestBody FreeDayPayload freeDayPayload){
         return freeDayService.add(email, freeDayPayload);
     }
 
     @PutMapping("/{freeDayId}")
-    public ApiResponse<FreeDayResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody FreeDayPayload freeDayPayload){
+    public ApiResponse<FreeDayResponse> update(@RequestHeader("email") String email, @Valid @PathVariable("freeDayId") Long id, @RequestBody FreeDayPayload freeDayPayload){
         return freeDayService.update(email, id, freeDayPayload);
     }
 

@@ -25,7 +25,7 @@ public class EmployeeApi {
     }
 
     @PutMapping("/{employeeId}")
-    public ApiResponse<EmployeeResponse> update(@RequestHeader("email") String email, @PathVariable("employeeId") Long id, @RequestBody EmployeePayload employeePayload){
+    public ApiResponse<EmployeeResponse> update(@RequestHeader("email") String email, @Valid @PathVariable("employeeId") Long id, @RequestBody EmployeePayload employeePayload){
         return employeeService.update(email, id, employeePayload);
     }
 
