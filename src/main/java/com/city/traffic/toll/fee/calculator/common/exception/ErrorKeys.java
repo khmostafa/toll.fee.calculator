@@ -15,7 +15,7 @@ public final class ErrorKeys {
     public static final String CAN_NOT_FIND_FREE_DAY_WITH_THIS_ID = "Can not find free day with this id";
     public static final String HOUR_FEE_START_TIME_MUST_NOT_BE_NULL = "Hour free start time must not be null";
     public static final String HOUR_FEE_END_TIME_MUST_NOT_BE_NULL = "Hour free end time must not be null";
-    public static final String HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL = "Hour free value must not be null & min = 1";
+    public static final String HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL = "Hour free value must not be null & min = 8 & max = 18";
     public static final String FREE_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY = "Free vehicle type must not be null or empty";
     public static final String FREE_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20 = "Free vehicle type length must not exceed 20";
     public static final String FREE_VEHICLE_TYPE_MUST_BE_IN_APPROVED_FORMAT = "Free vehicle type must be in pattern ^[A-Z_]*$";

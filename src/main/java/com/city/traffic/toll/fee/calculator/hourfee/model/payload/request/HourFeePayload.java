@@ -2,6 +2,7 @@ package com.city.traffic.toll.fee.calculator.hourfee.model.payload.request;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class HourFeePayload implements Serializable {
     private LocalTime endTime;
 
     @NotNull(message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
-    @Min(value = 1, message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
+    @Min(value = 8, message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
+    @Max(value = 18, message = ErrorKeys.HOUR_FEE_VALUE_TIME_MUST_NOT_BE_NULL)
     private Long value;
 }
