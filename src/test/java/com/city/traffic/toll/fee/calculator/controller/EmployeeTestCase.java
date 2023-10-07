@@ -70,24 +70,131 @@ class EmployeeTestCase {
     void notExistedEmployeeAddEmployee() throws Exception{
         EmployeePayload payload = StaticDtoProvider.createEmployeePayload("Fatma Baker", "fata@gmail.com",
                 "Profile Image", EmployeeRole.ADMIN);
-        assertError(getApiResult("notexisted@email.com", payload), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_IS_NOT_FOUND_IN_OUR_SYSTEM);
+        assertError(getAddResult("notexisted@email.com", payload), HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_IS_NOT_FOUND_IN_OUR_SYSTEM);
     }
 
     @Test
-    void addemployeeWithNameNullOrEmpty() throws Exception{
+    void addEmployeeWithNameNull() throws Exception{
         MvcResult result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
                 null,"fatma@gmail.com", "Image", EmployeeRole.ADMIN);
         assertError(result, HttpStatus.BAD_REQUEST, ErrorKeys.EMPLOYEE_NAME_MUST_NOT_BE_NULL_OR_EMPTY);
+    }
 
-        result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
+    @Test
+    void addEmployeeWithNameEmpty() throws Exception{
+        MvcResult result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
                 "","fatma@gmail.com", "Image", EmployeeRole.ADMIN);
         assertError(result, HttpStatus.BAD_REQUEST, ErrorKeys.EMPLOYEE_NAME_MUST_NOT_BE_NULL_OR_EMPTY);
     }
 
-    private MvcResult getApiResult(String email, EmployeePayload request) throws Exception{
+    @Test
+    void addEmployeeWithNameExceed100() throws Exception{
+        MvcResult result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
+                "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest" +
+                        "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest", "fatma@gmail.com", "Image", EmployeeRole.ADMIN);
+        assertError(result, HttpStatus.BAD_REQUEST, ErrorKeys.EMPLOYEE_NAME_LENGTH_MUST_NOT_EXCEED_100);
+    }
+
+    @Test
+    void addEmployeeWithEmailNotValid() throws Exception{
+        MvcResult result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
+                "Second Name", "fatmagmail.com", "Image", EmployeeRole.ADMIN);
+        assertError(result, HttpStatus.BAD_REQUEST, ErrorKeys.EMPLOYEE_EMAIL_MUST_BE_IN_VALID_FORMAT);
+    }
+    @Test
+    void addEmployeeWithEmailExisted() throws Exception{
+        MvcResult result = employeeOneAddEmployeeTwo("eng.khmostafa@gmail.com", EmployeeRole.SUPER_ADMIN,
+                "Second Name", "eng.khmostafa@gmail.com", "Image", EmployeeRole.ADMIN);
+        assertError(result, HttpStatus.CONFLICT, ErrorKeys.UNIQUE_CONSTRAINS_VIOLATED);
+    }
+
+    @Test
+    void updateEmployeeWithLowerRole() throws Exception{
+        MvcResult result = employeeOneUpdateEmployeeTwo("Second Name 1111", null, null, EmployeeRole.JUST_USER);
+        asserOK(result);
+    }
+
+    @Test
+    void updateEmployeeWithNotValidRole() throws Exception{
+        MvcResult result = employeeOneUpdateEmployeeTwo("Second Name 1111", null, null, EmployeeRole.SUPER_ADMIN);
+        assertError(result, HttpStatus.FORBIDDEN, ErrorKeys.THIS_USER_NOT_AUTHORIZED_FOR_THIS_ACTION);
+    }
+
+    @Test
+    void updateEmployeeWithEmailExisted() throws Exception{
+        MvcResult result = employeeOneUpdateEmployeeTwo("Second Name", "eng.khmostafa@gmail.com", "Image", EmployeeRole.EMPLOYEE);
+        assertError(result, HttpStatus.CONFLICT, ErrorKeys.UNIQUE_CONSTRAINS_VIOLATED);
+    }
+
+    @Test
+    void deleteEmployee() throws Exception{
+        MvcResult result = employeeOneDeleteEmployeeTwo();
+        asserOK(result);
+    }
+
+    @Test
+    void deleteEmployeeWithNotFOundUser() throws Exception{
+        MvcResult result = employeeOneDeleteEmployeeTwo();
+        asserOK(result);
+    }
+    private MvcResult employeeOneAddEmployeeTwo(String firstEmail, EmployeeRole firstRole,
+                                                String secondName, String secondEmail, String secondImage, EmployeeRole secondRole) throws Exception {
+        EmployeeEntity superAdmin = StaticEntityProvider.createEmployee("First Employee", firstEmail,
+                "Profile Image", firstRole);
+        employeeRepository.save(superAdmin);
+
+        EmployeePayload payload = StaticDtoProvider.createEmployeePayload(secondName, secondEmail,
+                secondImage, secondRole);
+        return getAddResult(superAdmin.getEmail(), payload);
+    }
+
+    private MvcResult employeeOneUpdateEmployeeTwo(
+            String secondName, String secondEmail, String secondImage, EmployeeRole secondRole
+    ) throws Exception {
+        EmployeeEntity superAdmin = StaticEntityProvider.createEmployee("First Employee", "eng.khmostafa@gmail.com",
+                "Profile Image", EmployeeRole.SUPER_ADMIN);
+        superAdmin = employeeRepository.save(superAdmin);
+
+        EmployeeEntity employee = StaticEntityProvider.createEmployee("Second Employee", "fatma@gmail.com",
+                "Profile Image", EmployeeRole.EMPLOYEE);
+        employee = employeeRepository.save(employee);
+
+        EmployeePayload payload = StaticDtoProvider.createEmployeePayload(secondName, secondEmail,
+                secondImage, secondRole);
+        return getUpdateResult(superAdmin.getEmail(), employee.getId(), payload);
+    }
+
+    private MvcResult employeeOneDeleteEmployeeTwo() throws Exception {
+        EmployeeEntity superAdmin = StaticEntityProvider.createEmployee("First Employee", "eng.khmostafa@gmail.com",
+                "Profile Image", EmployeeRole.SUPER_ADMIN);
+        superAdmin = employeeRepository.save(superAdmin);
+
+        EmployeeEntity employee = StaticEntityProvider.createEmployee("Second Employee", "fatma@gmail.com",
+                "Profile Image", EmployeeRole.EMPLOYEE);
+        employee = employeeRepository.save(employee);
+
+        return getDeleteResult(superAdmin.getEmail(), employee.getId());
+    }
+
+    private MvcResult getAddResult(String email, EmployeePayload request) throws Exception{
         final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post(EMPLOYEE_URL)
                 .header("email", email)
                 .content(objectMapper.writeValueAsString(request))
+                .contentType("application/json");
+        return mockMvc.perform(builder).andReturn();
+    }
+
+    private MvcResult getUpdateResult(String email, Long id, EmployeePayload request) throws Exception{
+        final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.put(EMPLOYEE_URL + "/" + id)
+                .header("email", email)
+                .content(objectMapper.writeValueAsString(request))
+                .contentType("application/json");
+        return mockMvc.perform(builder).andReturn();
+    }
+
+    private MvcResult getDeleteResult(String email, Long id) throws Exception{
+        final MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete(EMPLOYEE_URL + "/" + id)
+                .header("email", email)
                 .contentType("application/json");
         return mockMvc.perform(builder).andReturn();
     }
@@ -107,18 +214,6 @@ class EmployeeTestCase {
             assertFalse(json.get("success").asBoolean());
             assertEquals(message, json.get("errors").get("enMessage").asText());
         });
-    }
-
-
-    private MvcResult employeeOneAddEmployeeTwo(String firstEmail, EmployeeRole firstRole,
-                String secondName, String secondEmail, String secondImage, EmployeeRole secondRole) throws Exception {
-        EmployeeEntity superAdmin = StaticEntityProvider.createEmployee("First Employee", firstEmail,
-                "Profile Image", firstRole);
-        employeeRepository.save(superAdmin);
-
-        EmployeePayload payload = StaticDtoProvider.createEmployeePayload(secondName, secondEmail,
-                secondImage, secondRole);
-        return getApiResult(superAdmin.getEmail(), payload);
     }
 
     static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14-alpine")

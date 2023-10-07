@@ -20,6 +20,7 @@ public final class ErrorKeys {
     public static final String FREE_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20 = "Free vehicle type length must not exceed 20";
     public static final String FREE_VEHICLE_TYPE_MUST_BE_IN_APPROVED_FORMAT = "Free vehicle type must be in pattern ^[A-Z_]*$";
     public static final String UN_VALID_STORED_VALUE_FOR_EMPLOYEE_ROLE = "Stored Employee Role Not Valid";
+    public static final String UNIQUE_CONSTRAINS_VIOLATED = "The record you try to add/update is already existed";
     public static final String TOLL_VEHICLE_NO_LENGTH_MUST_NOT_EXCEED_20 = "Vehicle number length must not exceed 20";
     public static final String TOLL_VEHICLE_NO_MUST_NOT_BE_NULL_OR_EMPTY = "Vehicle number must not be null or empty";
     public static final String TOLL_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY = "Vehicle type must not be null or empty";

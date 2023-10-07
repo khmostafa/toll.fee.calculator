@@ -5,7 +5,9 @@ import com.city.traffic.toll.fee.calculator.common.model.dto.PaginationDto;
 import com.city.traffic.toll.fee.calculator.user.model.payload.request.EmployeePayload;
 import com.city.traffic.toll.fee.calculator.user.model.payload.response.EmployeeResponse;
 import com.city.traffic.toll.fee.calculator.user.service.EmployeeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,11 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employee")
 @RequiredArgsConstructor
+@Validated
 public class EmployeeApi {
     private final EmployeeService employeeService;
 
     @PostMapping
-    public ApiResponse<EmployeeResponse> add(@RequestHeader("email") String email, @RequestBody EmployeePayload employeePayload){
+    public ApiResponse<EmployeeResponse> add(@RequestHeader("email") String email, @Valid @RequestBody EmployeePayload employeePayload){
         return employeeService.add(email, employeePayload);
     }
 

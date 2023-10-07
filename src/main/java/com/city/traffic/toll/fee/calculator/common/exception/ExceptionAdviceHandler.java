@@ -53,8 +53,8 @@ public class ExceptionAdviceHandler {
     public ResponseEntity<Object> handleUniqueConstraintViolation(DataIntegrityViolationException ex) {
         if (ex.getMessage().contains("unique")) {
             ErrorPayload errorPayloads = ErrorPayload.builder()
-                    .enMessage("The record you try to add/update is already existed")
-                    .arMessage("The record you try to add/update is already existed")
+                    .enMessage(ErrorKeys.UNIQUE_CONSTRAINS_VIOLATED)
+                    .arMessage(ErrorKeys.UNIQUE_CONSTRAINS_VIOLATED)
                     .code("" + HttpStatus.CONFLICT)
                     .type(ex.getClass().getSimpleName()).build();
             return handleErrorResponse(errorPayloads, HttpStatus.CONFLICT);
