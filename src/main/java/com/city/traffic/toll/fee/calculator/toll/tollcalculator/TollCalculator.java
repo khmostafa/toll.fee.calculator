@@ -21,12 +21,12 @@ public class TollCalculator {
     public PaginationDto<List<FeeResponse>> getTotalFee(int offset, int limit, List<TollEntity> tolls, List<String> freeTypes, List<LocalDate> freeDays, List<HourFeeEntity> fees){
         String type = tolls.stream().findFirst().map(TollEntity::getType).orElse(null);
         String vehicleNo = tolls.stream().findFirst().map(TollEntity::getVehicleNo).orElse(null);
-        if (isTollFreeVehicle(type, freeTypes)){return (PaginationDto<List<FeeResponse>>) getPage(offset, limit,  new ArrayList<>());}
+        if (isTollFreeVehicle(type, freeTypes)){return getPage(offset, limit,  new ArrayList<>());}
         
         Map<LocalDate, List<List<LocalDateTime>>> groupedDays = tolls
                 .stream()
                 .map(TollEntity::getDate)
-                .filter(date -> isTollFreeDate(date, freeDays))
+                .filter(date -> !isTollFreeDate(date, freeDays))
                 .collect(Collectors.groupingBy(
                         LocalDateTime::toLocalDate,
                         Collectors.collectingAndThen(Collectors.toList(), this::groupByHours)

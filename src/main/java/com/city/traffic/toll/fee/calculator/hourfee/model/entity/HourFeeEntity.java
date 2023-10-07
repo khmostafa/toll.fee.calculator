@@ -2,6 +2,7 @@ package com.city.traffic.toll.fee.calculator.hourfee.model.entity;
 
 import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.city.traffic.toll.fee.calculator.common.model.model.EntityBase;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;

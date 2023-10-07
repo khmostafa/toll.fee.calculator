@@ -21,13 +21,13 @@ public class FreeVehicleApi {
         return freeDayService.add(email, freeVehiclePayload);
     }
 
-    @PutMapping("/{freeDayId}")
-    public ApiResponse<FreeVehicleResponse> update(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id, @RequestBody FreeVehiclePayload freeVehiclePayload){
+    @PutMapping("/{freeVehicleId}")
+    public ApiResponse<FreeVehicleResponse> update(@RequestHeader("email") String email, @PathVariable("freeVehicleId") Long id, @RequestBody FreeVehiclePayload freeVehiclePayload){
         return freeDayService.update(email, id, freeVehiclePayload);
     }
 
-    @DeleteMapping("/{freeDayId}")
-    public ApiResponse<FreeVehicleResponse> delete(@RequestHeader("email") String email, @PathVariable("freeDayId") Long id){
+    @DeleteMapping("/{freeVehicleId}")
+    public ApiResponse<FreeVehicleResponse> delete(@RequestHeader("email") String email, @PathVariable("freeVehicleId") Long id){
         return freeDayService.delete(email, id);
     }
     @GetMapping
