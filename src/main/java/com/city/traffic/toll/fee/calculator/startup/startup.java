@@ -18,14 +18,14 @@ public class startup implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Add records to the database during application startup
-        EmployeeEntity superAdmin = employeeRepository.findByEmail("eng.khmostafa@gmail.com").orElse(null);
-        if(superAdmin == null){
-            employeeRepository.save(EmployeeEntity.builder()
-                    .name("Khaled Mostafa")
-                    .email("eng.khmostafa@gmail.com")
-                    .profileImage("Image")
-                    .role(EmployeeRole.SUPER_ADMIN)
-                    .build(), 1L) ;
-        }
+//        EmployeeEntity superAdmin = employeeRepository.findByEmail("eng.khmostafa@gmail.com").orElse(null);
+//        if(superAdmin == null){
+//            employeeRepository.save(EmployeeEntity.builder()
+//                    .name("Khaled Mostafa")
+//                    .email("eng.khmostafa@gmail.com")
+//                    .profileImage("Image")
+//                    .role(EmployeeRole.SUPER_ADMIN)
+//                    .build(), 1L) ;
+//        }
     }
 }
