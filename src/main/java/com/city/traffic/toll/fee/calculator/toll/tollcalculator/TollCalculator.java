@@ -69,20 +69,6 @@ public class TollCalculator {
                 .totalPages((int) Math.ceil((double) originalList.size() / limit)).build();
     }
 
-    public PaginationDto<List<TollResponse>> getTollPage(int offset, int limit, List<TollResponse> originalList){
-        if (offset < 0 || limit <= 0 || offset >= originalList.size()) {
-            return PaginationDto.<List<TollResponse>>builder()
-                    .data(new ArrayList<>())
-                    .totalElements(0L)
-                    .totalPages(0).build();
-        }
-        List<TollResponse> data = originalList.subList(offset, Math.min(offset + limit, originalList.size()));
-        return PaginationDto.<List<TollResponse>>builder()
-                .data(data)
-                .totalElements((long) data.size())
-                .totalPages((int) Math.ceil((double) originalList.size() / limit)).build();
-    }
-
     private Long getTollFeeForOneTime(LocalDateTime tollTime, List<HourFeeEntity> hourFees) {
         LocalTime time = tollTime.toLocalTime();
         return hourFees.stream().filter(h -> time.isAfter(h.getStartTime()) && time.isBefore(h.getEndTime()))

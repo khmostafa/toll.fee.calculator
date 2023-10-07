@@ -18,6 +18,10 @@ import com.city.traffic.toll.fee.calculator.toll.specification.TollSpecification
 import com.city.traffic.toll.fee.calculator.toll.tollcalculator.TollCalculator;
 import com.city.traffic.toll.fee.calculator.user.model.entity.EmployeeEntity;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,10 +31,10 @@ import java.util.List;
 @Service
 public class TollService extends BaseService<TollEntity, TollRepository, TollSpecification, TollPayload, TollMapper, TollResponse, TollPermission> {
 
-    private FreeDayRepository freeDayRepository;
-    private FreeVehicleRepository freeVehicleRepository;
-    private HourFeeRepository hourFeeRepository;
-    private TollCalculator tollCalculator;
+    private final FreeDayRepository freeDayRepository;
+    private final FreeVehicleRepository freeVehicleRepository;
+    private final HourFeeRepository hourFeeRepository;
+    private final TollCalculator tollCalculator;
 
     public TollService(TollMapper mapper, TollRepository repository, TollSpecification specification, TollPermission permission, FreeDayRepository freeDayRepository, FreeVehicleRepository freeVehicleRepository, HourFeeRepository hourFeeRepository, TollCalculator tollCalculator) {
         super(mapper, repository, specification, permission);
@@ -55,9 +59,13 @@ public class TollService extends BaseService<TollEntity, TollRepository, TollSpe
     public ApiResponse<PaginationDto<List<TollResponse>>> listTolls(String email, String vehicleNo, int offset, int limit){
         log.info("User '{}' need to list toll history for vehicle '{}'", email, vehicleNo);
         EmployeeEntity user = this.getPermission().getEmployeeProfile(email);
-        List<TollEntity> tolls = this.getRepository().getTollDates(vehicleNo);
+        PageRequest pageRequest = PageRequest.of(offset, limit, Sort.by("createdAt").descending());
+        Specification<TollEntity> tollSpecification = this.getSpecification().vehicleSpec(vehicleNo);
+        Page<TollEntity> tollPage = this.getRepository().findAll(tollSpecification, pageRequest);
+        List<TollEntity> tolls = tollPage.getContent();
         List<TollResponse> responses = tolls.stream().map(t -> this.getMapper().toResponse(t)).toList();
-        PaginationDto<List<TollResponse>> page = tollCalculator.getTollPage(offset, limit, responses);
+        PaginationDto<List<TollResponse>> page = PaginationDto.<List<TollResponse>>builder()
+                .data(responses).totalPages(tollPage.getTotalPages()).totalElements(tollPage.getTotalElements()).build();
         page.getData().forEach(r -> log.info("User '{}' list record {}", user.getEmail(), r));
         return ApiResponse.ok(page);
     }

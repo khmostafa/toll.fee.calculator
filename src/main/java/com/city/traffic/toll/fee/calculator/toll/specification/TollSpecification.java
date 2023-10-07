@@ -17,4 +17,11 @@ public class TollSpecification implements BaseSpecification<TollEntity> {
         return (Root<TollEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
                 criteriaBuilder.conjunction();
     }
+
+    public Specification<TollEntity> vehicleSpec(String vehicleNo) {
+        return (Root<TollEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) ->
+                vehicleNo == null || vehicleNo.isEmpty() ?
+                criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(criteriaBuilder.lower(root.get("vehicleNo")), vehicleNo.toLowerCase());
+    }
 }
