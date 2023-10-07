@@ -5,13 +5,17 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
+import java.io.Serializable;
+
 @Data
 @Builder
-public class FreeVehiclePayload {
+@AllArgsConstructor
+public class FreeVehiclePayload implements Serializable {
     @NotNull(message = ErrorKeys.FREE_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY)
     @NotEmpty(message = ErrorKeys.FREE_VEHICLE_TYPE_MUST_NOT_BE_NULL_OR_EMPTY)
     @Length(max = 20, message = ErrorKeys.FREE_VEHICLE_TYPE_LENGTH_MUST_NOT_EXCEED_20)

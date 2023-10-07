@@ -4,6 +4,7 @@ import com.city.traffic.toll.fee.calculator.common.exception.ErrorKeys;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import java.time.LocalTime;
 
 @Data
 @Builder
+@AllArgsConstructor
 public class HourFeePayload implements Serializable {
     @JsonFormat(pattern = "HH:mm:ss")
     @NotNull(message = ErrorKeys.HOUR_FEE_START_TIME_MUST_NOT_BE_NULL)
