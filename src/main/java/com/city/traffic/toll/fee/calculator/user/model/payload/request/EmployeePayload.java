@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class EmployeePayload implements Serializable {
     @NotNull(message = ErrorKeys.EMPLOYEE_NAME_MUST_NOT_BE_NULL_OR_EMPTY)
     @NotEmpty(message = ErrorKeys.EMPLOYEE_NAME_MUST_NOT_BE_NULL_OR_EMPTY)

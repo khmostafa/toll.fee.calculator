@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class TollPayload implements Serializable {
     @NotNull(message = ErrorKeys.TOLL_VEHICLE_NO_MUST_NOT_BE_NULL_OR_EMPTY)
     @NotEmpty(message = ErrorKeys.TOLL_VEHICLE_NO_MUST_NOT_BE_NULL_OR_EMPTY)

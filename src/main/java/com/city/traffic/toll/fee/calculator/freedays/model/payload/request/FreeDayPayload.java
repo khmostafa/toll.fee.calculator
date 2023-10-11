@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class FreeDayPayload implements Serializable {
     @NotNull(message = ErrorKeys.FREE_DAY_NAME_MUST_NOT_BE_NULL_OR_EMPTY)
     @NotEmpty(message = ErrorKeys.FREE_DAY_NAME_MUST_NOT_BE_NULL_OR_EMPTY)

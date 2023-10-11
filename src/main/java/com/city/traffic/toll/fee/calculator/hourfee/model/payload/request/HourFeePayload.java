@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class HourFeePayload implements Serializable {
     @JsonFormat(pattern = "HH:mm:ss")
     @NotNull(message = ErrorKeys.HOUR_FEE_START_TIME_MUST_NOT_BE_NULL)
