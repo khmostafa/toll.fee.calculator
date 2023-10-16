@@ -18,12 +18,12 @@ public class TollCalculator {
     public PaginationDto<List<FeeResponse>> getTotalFee(int offset, int limit, List<TollEntity> tolls, List<String> freeTypes, List<LocalDate> freeDays, List<HourFeeEntity> fees){
         String type = tolls.stream().findFirst().map(TollEntity::getType).orElse(null);
         String vehicleNo = tolls.stream().findFirst().map(TollEntity::getVehicleNo).orElse(null);
-        if (isTollFreeVehicle(type, freeTypes)){return getPage(offset, limit,  new ArrayList<>());}
+        if (FreeVehicleUtility.isTollFreeVehicle(type, freeTypes)){return getPage(offset, limit,  new ArrayList<>());}
         
         Map<LocalDate, List<List<LocalDateTime>>> groupedDays = tolls
                 .stream()
                 .map(TollEntity::getDate)
-                .filter(date -> !isTollFreeDate(date, freeDays))
+                .filter(date -> !FreeDayUtility.isTollFreeDate(date, freeDays))
                 .collect(Collectors.groupingBy(
                         LocalDateTime::toLocalDate,
                         Collectors.collectingAndThen(Collectors.toList(), this::groupByHours)
@@ -46,10 +46,6 @@ public class TollCalculator {
 
         return getPage(offset, limit, feeResponses);
 
-    }
-
-    private boolean isTollFreeVehicle(String type, List<String> freeTypes) {
-        return freeTypes.stream().filter(Objects::nonNull).anyMatch(ft -> ft.equalsIgnoreCase(type));
     }
 
     private PaginationDto<List<FeeResponse>> getPage(int offset, int limit, List<FeeResponse> originalList){
@@ -78,9 +74,6 @@ public class TollCalculator {
     private Long getTollFeePerDay(List<List<LocalDateTime>> tollDates, List<HourFeeEntity> hourFees) {
         long dayTotalFee = tollDates.stream().map(t -> getTollFeePerHour(t, hourFees)).mapToLong(Long::longValue).sum();
         return dayTotalFee > 60 ? 60 : dayTotalFee;
-    }
-    private Boolean isTollFreeDate(LocalDateTime date, List<LocalDate> freeDays) {
-        return freeDays.stream().filter(Objects::nonNull).anyMatch(fd -> fd.equals(date.toLocalDate()));
     }
 
     private List<List<LocalDateTime >> groupByHours(List<LocalDateTime> localDateTimes){
